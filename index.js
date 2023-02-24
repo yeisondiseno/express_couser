@@ -10,10 +10,13 @@ app.get('/', (_, res) => {
 });
 
 // get method
-app.get('/productos', (_, res) => {
+app.get('/productos', (req, res) => {
+  const { size } = req.query;
+
+  const limit = parseInt(size) || 10;
   const products = [];
 
-  for (let index = 0; index < 100; index++) {
+  for (let index = 0; index < limit; index++) {
     products.push({
       id: index,
       name: faker.commerce.productName(),
@@ -23,6 +26,10 @@ app.get('/productos', (_, res) => {
   }
 
   res.json(products);
+});
+
+app.get('/productos/filter', (req, res) => {
+  res.send('Yo soy un filter');
 });
 
 // get params
