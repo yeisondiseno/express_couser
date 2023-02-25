@@ -36,4 +36,14 @@ router.get('/:id', (req, res) => {
   });
 });
 
+// create Product
+router.post('/', (req, res) => {
+  const { body } = req;
+
+  res.json({
+    message: 'Created',
+    data: body,
+  });
+});
+
 module.exports = router;
