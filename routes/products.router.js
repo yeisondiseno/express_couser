@@ -16,17 +16,21 @@ router.get('/filter', (req, res) => {
 });
 
 // get params
-router.get('/:id', async (req, res) => {
-  const { id } = req.params;
-  const product = await service.findOne(id);
+router.get('/:id', async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const product = await service.findOne(id);
 
-  if (!product || product.length === 0) {
-    return res.status(404).json({
-      message: 'Not found',
-    });
+    if (!product || product.length === 0) {
+      return res.status(404).json({
+        message: 'Not found',
+      });
+    }
+
+    res.status(200).json(product);
+  } catch (error) {
+    next(error);
   }
-
-  res.status(200).json(product);
 });
 
 // create Product
