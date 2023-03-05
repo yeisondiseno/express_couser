@@ -42,7 +42,7 @@ router.post('/', async (req, res) => {
 });
 
 // update
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', async (req, res, next) => {
   const {
     body,
     params: { id },
@@ -52,9 +52,7 @@ router.patch('/:id', async (req, res) => {
     const productUpdated = await service.update({ id, changes: body });
     res.status(200).json(productUpdated);
   } catch (error) {
-    res.status(404).json({
-      message: error.message,
-    });
+    next(error);
   }
 });
 
